@@ -2,10 +2,11 @@ package Entities;
 
 import Services.Utils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GPGSV extends NmeaString {
+public class GPGSV extends NmeaString<GPGSV> {
     private int numberOfMessagesInCycle;
     private int messageNumber;
     private int svsInView;
@@ -34,30 +35,6 @@ public class GPGSV extends NmeaString {
             "Elevation in degrees, 90 maximum                    ",
             "Azimuth, degrees from true north, 000 to 359        ",
             "SNR, 00-99 dB (null when not tracking               "};
-
-    public GPGSV(String[] str) {
-        super.setNmeaTitle(str[0]);
-        this.numberOfMessagesInCycle = Utils.stringToInt(str[1]);
-        this.messageNumber = Utils.stringToInt(str[2]);
-        this.svsInView = Utils.stringToInt(str[3]);
-        this.sv1PrnNumber = Utils.stringToInt(str[4]);
-        this.sv2PrnNumber = Utils.stringToInt(str[8]);
-        this.sv3PrnNumber = Utils.stringToInt(str[12]);
-        this.sv4PrnNumber = Utils.stringToInt(str[16]);
-        this.sv1Elevation = Utils.stringToInt(str[5]);
-        this.sv2Elevation = Utils.stringToInt(str[9]);
-        this.sv3Elevation = Utils.stringToInt(str[13]);
-        this.sv4Elevation = Utils.stringToInt(str[17]);
-        this.sv1Azimuth = Utils.stringToInt(str[6]);
-        this.sv2Azimuth = Utils.stringToInt(str[10]);
-        this.sv3Azimuth = Utils.stringToInt(str[14]);
-        this.sv4Azimuth = Utils.stringToInt(str[18]);
-        this.sv1SNR = Utils.stringToInt(str[7]);
-        this.sv2SNR = Utils.stringToInt(str[11]);
-        this.sv3SNR = Utils.stringToInt(str[15]);
-        this.sv4SNR = Utils.stringToInt(str[19]);
-
-    }
 
     @Override
     public void show() {
@@ -91,6 +68,31 @@ public class GPGSV extends NmeaString {
                 System.out.println((i + 1) + "SV " + fields[j + 4] + ": " + stringFields.get(j + 4 * (i + 1)));
             }
         }
+
+    }
+
+    @Override
+    public void setNew (String[] str) {
+        super.setNmeaTitle(str[0]);
+        this.numberOfMessagesInCycle = Utils.stringToInt(str[1]);
+        this.messageNumber = Utils.stringToInt(str[2]);
+        this.svsInView = Utils.stringToInt(str[3]);
+        this.sv1PrnNumber = Utils.stringToInt(str[4]);
+        this.sv2PrnNumber = Utils.stringToInt(str[8]);
+        this.sv3PrnNumber = Utils.stringToInt(str[12]);
+        this.sv4PrnNumber = Utils.stringToInt(str[16]);
+        this.sv1Elevation = Utils.stringToInt(str[5]);
+        this.sv2Elevation = Utils.stringToInt(str[9]);
+        this.sv3Elevation = Utils.stringToInt(str[13]);
+        this.sv4Elevation = Utils.stringToInt(str[17]);
+        this.sv1Azimuth = Utils.stringToInt(str[6]);
+        this.sv2Azimuth = Utils.stringToInt(str[10]);
+        this.sv3Azimuth = Utils.stringToInt(str[14]);
+        this.sv4Azimuth = Utils.stringToInt(str[18]);
+        this.sv1SNR = Utils.stringToInt(str[7]);
+        this.sv2SNR = Utils.stringToInt(str[11]);
+        this.sv3SNR = Utils.stringToInt(str[15]);
+        this.sv4SNR = Utils.stringToInt(str[19]);
 
     }
 }

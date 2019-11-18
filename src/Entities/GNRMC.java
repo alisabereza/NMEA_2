@@ -6,7 +6,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.util.Date;
 
-public class GNRMC extends NmeaString {
+public class GNRMC extends NmeaString<GNRMC> {
     private Time timeStamp;
     private char validity;
     private double latitude;
@@ -29,20 +29,6 @@ public class GNRMC extends NmeaString {
             "Date Stamp                   ",
             "Magnetic variation, East/West"};
 
-    public GNRMC(String[] str) throws ParseException {
-        super.setNmeaTitle(str[0]);
-        this.timeStamp = Utils.stringToTime(str[1]);
-        this.validity = Utils.stringToChar(str[2]);
-        this.latitude = Utils.stringToDouble(str[3]);
-        this.northSouth = Utils.stringToChar(str[4]);
-        this.longtitude = Utils.stringToDouble(str[5]);
-        this.eastWest = Utils.stringToChar(str[6]);
-        this.speed = Utils.stringToDouble(str[7]);
-        this.truCourse = Utils.stringToDouble(str[8]);
-        this.dateStamp = Utils.stringToDate(str[9]);
-        this.magneticVariation = Utils.stringToDouble(str[10]);
-        this.eastWest2 = Utils.stringToChar(str[11]);
-    }
 
     @Override
     public void show() {
@@ -55,5 +41,22 @@ public class GNRMC extends NmeaString {
         System.out.println(fields[6] + ": " + truCourse);
         System.out.println(fields[7] + ": " + dateStamp);
         System.out.println(fields[8] + ": " + magneticVariation + ", " + eastWest2);
+    }
+
+    @Override
+    public void setNew(String[] str) throws ParseException {
+        super.setNmeaTitle(str[0]);
+        this.timeStamp = Utils.stringToTime(str[1]);
+        this.validity = Utils.stringToChar(str[2]);
+        this.latitude = Utils.stringToDouble(str[3]);
+        this.northSouth = Utils.stringToChar(str[4]);
+        this.longtitude = Utils.stringToDouble(str[5]);
+        this.eastWest = Utils.stringToChar(str[6]);
+        this.speed = Utils.stringToDouble(str[7]);
+        this.truCourse = Utils.stringToDouble(str[8]);
+        this.dateStamp = Utils.stringToDate(str[9]);
+        this.magneticVariation = Utils.stringToDouble(str[10]);
+        this.eastWest2 = Utils.stringToChar(str[11]);
+
     }
 }

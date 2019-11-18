@@ -1,10 +1,11 @@
 package Entities;
 
 import Services.Utils;
+
 import java.text.ParseException;
 import java.util.Date;
 
-public class GNGLL extends NmeaString {
+public class GNGLL extends NmeaString<GNGLL> {
     private double latitude;
     private char direction1;
     private double longtitude;
@@ -20,7 +21,20 @@ public class GNGLL extends NmeaString {
             "Data status: A = Data valid, V = Data invalid                        ",
             "Positioning system mode indicator                                    "};
 
-    public GNGLL(String[] str) throws ParseException {
+
+
+    @Override
+    public void show() {
+        System.out.println(fields[0] + ": " + super.getNmeaTitle());
+        System.out.println(fields[1] + ": " + latitude + ", " + direction1);
+        System.out.println(fields[2] + ": " + longtitude + ", " + direction2);
+        System.out.println(fields[3] + ": " + date);
+        System.out.println(fields[4] + ": " + status);
+        System.out.println(fields[5] + ": " + posSysModIndicator);
+    }
+
+    @Override
+    public void setNew(String[] str) throws ParseException {
         super.setNmeaTitle(str[0]);
         this.latitude = Utils.stringToDouble(str[1]);
         this.direction1 = Utils.stringToChar(str[2]);
@@ -32,15 +46,5 @@ public class GNGLL extends NmeaString {
             this.posSysModIndicator = Utils.stringToChar(str[str.length - 1]);
         }
 
-    }
-
-    @Override
-    public void show() {
-        System.out.println(fields[0] + ": " + super.getNmeaTitle());
-        System.out.println(fields[1] + ": " + latitude + ", " + direction1);
-        System.out.println(fields[2] + ": " + longtitude + ", " + direction2);
-        System.out.println(fields[3] + ": " + date);
-        System.out.println(fields[4] + ": " + status);
-        System.out.println(fields[5] + ": " + posSysModIndicator);
     }
 }

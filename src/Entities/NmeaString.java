@@ -1,6 +1,8 @@
 package Entities;
 
-public abstract class NmeaString {
+import java.text.ParseException;
+
+public abstract class NmeaString <T extends NmeaString<T>> {
     private String nmeaTitle;
 
     public void setNmeaTitle(String nmeaTitle) {
@@ -12,4 +14,5 @@ public abstract class NmeaString {
     }
 
     abstract void show();
+    abstract void setNew(String [] strings) throws ParseException;
 }

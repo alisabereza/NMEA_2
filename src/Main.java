@@ -1,8 +1,11 @@
 import Services.Utils;
+
 import java.text.ParseException;
 
 public class Main {
+
     public static void main(String[] args) throws ParseException {
-        Utils.NmeaParser("$GPRMC,081836,A,3751.65,S,14507.36,E,000.0,360.0,130998,011.3,E*62");
+
+        Utils.NmeaParser("$GPGSV,3,1,11,03,03,111,00,04,15,270,00,06,01,010,00,13,06,292,00*74");
     }
 }

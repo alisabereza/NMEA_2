@@ -2,60 +2,42 @@ package Services;
 
 import Entities.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Utils {
-    public static void NmeaParser(String string) throws ParseException {
+public class Utils<T extends NmeaString> {
+    public static <T> void NmeaParser(String string) {
         String[] subStr;
         String delimiter = ",";
         subStr = string.split(delimiter);
         subStr[0] = subStr[0].substring(1);
         subStr[subStr.length - 1] = subStr[subStr.length - 1].substring(0, subStr[subStr.length - 1].indexOf("*"));
 
-        switch (subStr[0]) {
-            case "GPGSV":
-            case "GLGSV": {
-                GPGSV gpgsv = new GPGSV(subStr);
-                gpgsv.show();
-                break;
-            }
-            case "GNGLL":
-            case "GPGLL": {
-                GNGLL gngll = new GNGLL(subStr);
-                gngll.show();
-                break;
-            }
-            case "GNRMC":
-            case "GPRMC": {
-                GNRMC gnrmc = new GNRMC(subStr);
-                gnrmc.show();
-                break;
-            }
-            case "GNVTG":
-            case "GPVTG": {
-                GNVTG gnvtg = new GNVTG(subStr);
-                gnvtg.show();
-                break;
-            }
-            case "GNGGA":
-            case "GPGGA": {
-                GNGGA gngga = new GNGGA(subStr);
-                gngga.show();
-                break;
-            }
-            case "GNGSA":
-            case "GPGSA": {
-                GNGSA gngsa = new GNGSA(subStr);
-                gngsa.show();
-                break;
-            }
-            default: {
-                System.out.println("Unsupported type");
-            }
+        try {
+            String className = "Entities." + subStr[0];
+            Class clazz = Class.forName(className);
+
+            T message = (T) clazz.newInstance();
+            Method methodSetNew = message.getClass().getDeclaredMethod("setNew", String[].class);
+            methodSetNew.invoke(message, new Object[]{subStr});
+            Method methodShow = message.getClass().getDeclaredMethod("show");
+            methodShow.invoke(message);
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
+
     }
 
     public static int stringToInt(String s) {

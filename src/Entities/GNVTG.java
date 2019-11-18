@@ -2,10 +2,11 @@ package Entities;
 
 import Services.Utils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GNVTG extends NmeaString {
+public class GNVTG extends NmeaString<GNVTG>  {
     private double trueTrack;
     private char ttMadeGood;
     private double magneticTrack;
@@ -21,17 +22,6 @@ public class GNVTG extends NmeaString {
             "Ground speed, knots               ",
             "Ground speed, Kilometers per hour "};
 
-    public GNVTG(String[] str) {
-        super.setNmeaTitle(str[0]);
-        this.trueTrack = Utils.stringToDouble(str[1]);
-        this.ttMadeGood = Utils.stringToChar(str[2]);
-        this.magneticTrack = Utils.stringToDouble(str[3]);
-        this.mtMadeGood = Utils.stringToChar(str[4]);
-        this.speedNots = Utils.stringToDouble(str[5]);
-        this.knots = Utils.stringToChar(str[6]);
-        this.speedKmH = Utils.stringToDouble(str[7]);
-        this.km = Utils.stringToChar(str[8]);
-    }
 
     @Override
     public void show() {
@@ -50,4 +40,18 @@ public class GNVTG extends NmeaString {
             System.out.println(fields[i] + ": " + stringFields.get(2 * i - 1) + ", " + stringFields.get(2 * i));
         }
     }
+
+    @Override
+    public void setNew(String[] str) {
+        super.setNmeaTitle(str[0]);
+        this.trueTrack = Utils.stringToDouble(str[1]);
+        this.ttMadeGood = Utils.stringToChar(str[2]);
+        this.magneticTrack = Utils.stringToDouble(str[3]);
+        this.mtMadeGood = Utils.stringToChar(str[4]);
+        this.speedNots = Utils.stringToDouble(str[5]);
+        this.knots = Utils.stringToChar(str[6]);
+        this.speedKmH = Utils.stringToDouble(str[7]);
+        this.km = Utils.stringToChar(str[8]);
+    }
+
 }

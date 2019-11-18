@@ -5,7 +5,7 @@ import Services.Utils;
 import java.sql.Time;
 import java.text.ParseException;
 
-public class GNGGA extends NmeaString {
+public class GNGGA extends NmeaString<GNGGA> {
     private Time time;
     private double latitude;
     private char northSouth;
@@ -33,7 +33,24 @@ public class GNGGA extends NmeaString {
             "Time since last DGPS update                                 ",
             "DGPS reference station id                                   "};
 
-    public GNGGA(String[] str) throws ParseException {
+
+    @Override
+    public void show() {
+        System.out.println(fields[0] + ": " + super.getNmeaTitle());
+        System.out.println(fields[1] + ": " + time);
+        System.out.println(fields[2] + ": " + latitude + ", " + northSouth);
+        System.out.println(fields[3] + ": " + longtitude + ", " + eastWest);
+        System.out.println(fields[4] + ": " + gpsQualityIndicator);
+        System.out.println(fields[5] + ": " + numberOfSatellites);
+        System.out.println(fields[6] + ": " + hDOP);
+        System.out.println(fields[7] + ": " + altitude + ", " + altMeasure);
+        System.out.println(fields[8] + ": " + height + ", " + heighMeasure);
+        System.out.println(fields[9] + ": " + timeSinceLastUpdate);
+        System.out.println(fields[10] + ": " + dGPSReferenceStation);
+    }
+
+    @Override
+    public void setNew(String[] str) throws ParseException {
         super.setNmeaTitle(str[0]);
         this.time = Utils.stringToTime(str[1]);
         this.latitude = Utils.stringToDouble(str[2]);
@@ -54,21 +71,4 @@ public class GNGGA extends NmeaString {
         this.dGPSReferenceStation = (str[14].equals("")) ? 0 : Utils.stringToInt(str[14]);
         ;
     }
-
-    @Override
-    public void show() {
-        System.out.println(fields[0] + ": " + super.getNmeaTitle());
-        System.out.println(fields[1] + ": " + time);
-        System.out.println(fields[2] + ": " + latitude + ", " + northSouth);
-        System.out.println(fields[3] + ": " + longtitude + ", " + eastWest);
-        System.out.println(fields[4] + ": " + gpsQualityIndicator);
-        System.out.println(fields[5] + ": " + numberOfSatellites);
-        System.out.println(fields[6] + ": " + hDOP);
-        System.out.println(fields[7] + ": " + altitude + ", " + altMeasure);
-        System.out.println(fields[8] + ": " + height + ", " + heighMeasure);
-        System.out.println(fields[9] + ": " + timeSinceLastUpdate);
-        System.out.println(fields[10] + ": " + dGPSReferenceStation);
-    }
-
-
 }
